@@ -127,7 +127,7 @@ var Tag = function (_React$Component) {
                 'b',
                 { className: 'fn-close', onClick: this.handleClose },
                 //_react2.default.createElement(_iconM2.default, { type: 'cross' })
-                _react2.default.createElement('i', null, String.fromCharCode(215)),
+                _react2.default.createElement('i', null, String.fromCharCode(215))
             )
         );
     };
