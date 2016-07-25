@@ -1,0 +1,48 @@
+{
+  "name": "m-tag",
+  "version": "1.0.1",
+  "description": "m-tag 进行标记和分类的小标签",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/59fe/m-tag.git"
+  },
+  "homepage": "https://github.com/59fe/m-tag",
+  "author": {
+    "name": "半边",
+    "email": "itaofe@gmail.com"
+  },
+  "maintainers": [
+    {
+      "name": "半边",
+      "email": "itaofe@gmail.com"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/59fe/m-tag/issues"
+  },
+  "readmeFilename": "README.md",
+  "dependencies": {
+    "react": "~15.2.0",
+    "react-dom": "~15.2.0",
+    "m-base": "^1.0.5",
+    "classnames": "~2.2.3"
+  },
+  "keywords": [
+    "tag",
+    "react",
+    "mobile"
+  ],
+  "license": "Apache-2.0"
+}
+
+  "dependencies": {
+    "@ali/icon-m": "~1.0.0",
+    "@ali/msui-core": "~1.0.5",
+    "classnames": "~2.2.3",
+    "react-tap-event-plugin": "0.2.1"
+  },
+
