@@ -67,14 +67,19 @@ var Tag = function (_React$Component) {
     }
 
     Tag.prototype.handleClick = function handleClick(e) {
+        var props = this.props
 
-        if (this.props.disabled || this.props.readOnly || !this.checkable) return;
+        if (props.disabled || props.readOnly || !this.checkable) return;
 
+        props.resetRadioTag && props.resetRadioTag(props.id);
         var _checked = this.state.checked;
-        this.setState({ checked: !_checked });
+        this.setState({
+          // 如果是单选逻辑(单选逻辑下Tag组件的props才有resetRadioTag)，被点选的Tag的选中状态(checked)一定是true。否则取反
+          checked: props.resetRadioTag ? true : !_checked
+        });
 
-        if (typeof this.props.onChange === 'function') {
-            this.props.onChange(!_checked);
+        if (typeof props.onChange === 'function') {
+            props.onChange(!_checked);
         }
     };
 
@@ -102,9 +107,14 @@ var Tag = function (_React$Component) {
         var children = _props2.children;
 
         var others = _objectWithoutProperties(_props2, ['className', 'selectable', 'checkable', 'closable', 'children']);
+        var isStateChecked = this.state.checked;
+        // 如果是单选逻辑(单选逻辑下Tag组件的props才有resetRadioTag)，并且被选中的Tag的id不是当前render的这个Tag,并且这个Tag之前是选中状态——则将他置为未选中
+        if (_props2.resetRadioTag && _props2.checkedTagId !== _props2.id && isStateChecked) {
+          isStateChecked = false;
+        }
 
         var clazz = (0, _classnames2.default)(PREFIX, _defineProperty({
-            'state-checked': this.state.checked
+            'state-checked': isStateChecked
         }, PREFIX + '-closed', this.state.closed), PREFIX + '-' + this.handler, className);
 
         return this.handler === 'link' ? _react2.default.createElement(
@@ -165,10 +175,16 @@ var TagGroup = function (_Component) {
         _classCallCheck(this, TagGroup);
 
         var _this2 = _possibleConstructorReturn(this, _Component.call(this, props));
+        if (this.props.radio) {
+            _this2.state = {
+                checkedTagId: undefined
+            };
+        }
 
         var selectable = props.selectable;
         var checkable = props.checkable;
         var closable = props.closable;
+        _this2.resetRadioTag = _this2.resetRadioTag.bind(_this2);
 
         var others = _objectWithoutProperties(props, ['selectable', 'checkable', 'closable']);
 
@@ -177,8 +193,17 @@ var TagGroup = function (_Component) {
         }
         return _this2;
     }
-
+    // 参数id：被点选的tag的key值
+    TagGroup.prototype.resetRadioTag = function (id) {
+      if (!this.props.radio) return;
+      // 使所有radio Tag的状态都变为未选中
+      this.setState({
+        checkedTagId: id
+        //,closed: false
+      })
+    }
     TagGroup.prototype.render = function render() {
+        var self = this;
         var _props3 = this.props;
         var className = _props3.className;
         var children = _props3.children;
@@ -192,6 +217,7 @@ var TagGroup = function (_Component) {
         // Tag继承TagGroup的操作属性,并且TagGroup优先级高于Tag
         // 当TagGroup上有操作属性进,Tag上的操作属性全部失效
         if (others.selectable || others.checkable || others.closable) {
+
             _react2.default.Children.forEach(children, function (child, i) {
                 // 非Tag元素直接push
                 if (child.type !== Tag) {
@@ -200,11 +226,19 @@ var TagGroup = function (_Component) {
                     (function () {
                         var _props = _objectWithoutProperties(child.props, []); // child.props是readonly的
 
-
                         ['selectable', 'checkable', 'closable'].forEach(function (n) {
                             _props[n] = others[n];
                         });
-                        _children.push(_react2.default.createElement(Tag, _extends({ key: 'tag-' + i }, _props)));
+
+                        var partProps = {
+                          key: 'tag-' + i,
+                          id: 'tag-' + i
+                        }
+                        if (_props3.radio) {
+                          partProps.checkedTagId = self.state.checkedTagId;
+                          partProps.resetRadioTag = self.resetRadioTag;
+                        }
+                        _children.push(_react2.default.createElement(Tag, _extends(partProps, _props)));
                     })();
                 }
             });
@@ -225,7 +259,8 @@ var TagGroup = function (_Component) {
 TagGroup.propTypes = {
     selectable: _react.PropTypes.bool,
     checkable: _react.PropTypes.bool,
-    closable: _react.PropTypes.bool
+    closable: _react.PropTypes.bool,
+    radio: _react.PropTypes.bool
 };
 
 Tag.TagGroup = TagGroup;
