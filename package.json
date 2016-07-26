@@ -1,6 +1,6 @@
 {
   "name": "m-tag",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "m-tag 进行标记和分类的小标签",
   "main": "index.js",
   "scripts": {
