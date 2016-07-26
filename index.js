@@ -119,11 +119,11 @@ var Tag = function (_React$Component) {
 
         return this.handler === 'link' ? _react2.default.createElement(
             'a',
-            _extends({ className: clazz }),
+            _extends({ className: clazz }, _objectWithoutProperties(others, ['checkedTagId', 'resetRadioTag'])),
             children
         ) : this.checkable ? _react2.default.createElement(
             'span',
-            _extends({ onClick: this.handleClick, className: clazz }),
+            _extends({ onClick: this.handleClick, className: clazz }, _objectWithoutProperties(others, ['checkedTagId', 'resetRadioTag'])),
             children,
             this.handler === 'checkable' ? _react2.default.createElement(
                 's',
@@ -132,7 +132,7 @@ var Tag = function (_React$Component) {
             ) : null
         ) : _react2.default.createElement(
             'span',
-            _extends({ className: clazz }),
+            _extends({ className: clazz }, _objectWithoutProperties(others, ['checkedTagId', 'resetRadioTag'])),
             children,
             this.props.readOnly ? null : _react2.default.createElement(
                 'b',
@@ -248,7 +248,7 @@ var TagGroup = function (_Component) {
 
         return _react2.default.createElement(
             'div',
-            _extends({ className: clazz }),
+            _extends({ className: clazz }, _objectWithoutProperties(others, ['selectable', 'radio', 'checkable', 'closable'])),
             _children
         );
     };
