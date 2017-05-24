@@ -12,6 +12,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _PropTypes = require('prop-types');
+
+var _PropTypes2 = _interopRequireDefault(_PropTypes);
+
 var _classnames = require('classnames');
 
 var _classnames2 = _interopRequireDefault(_classnames);
@@ -102,9 +106,9 @@ var TagGroup = function (_Component) {
 }(_react.Component);
 
 TagGroup.propTypes = {
-    selectable: _react.PropTypes.bool,
-    checkable: _react.PropTypes.bool,
-    closable: _react.PropTypes.bool
+    selectable: _PropTypes2.default.bool,
+    checkable:  _PropTypes2.default.bool,
+    closable:   _PropTypes2.default.bool
 };
 
 exports.default = TagGroup;
